@@ -4,7 +4,7 @@ from flask_jwt_extended import JWTManager
 from config import Config
 from models.db import init_db
 from routes.auth import auth_bp
-from routes.patients import patients_bp
+from routes.patients import patients_bp 
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -13,8 +13,8 @@ CORS(app)
 JWTManager(app)
 
 app.register_blueprint(auth_bp)
-app.register_blueprint(patients_bp)
+app.register_blueprint(patients_bp)      
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

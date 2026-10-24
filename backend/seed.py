@@ -1,6 +1,8 @@
 import sqlite3
 from werkzeug.security import generate_password_hash
 from models.db import init_db
+from meilisearch import Client
+from config import Config
 
 def seed_data():
     # Ensure all 4 tables exist before inserting data
@@ -98,6 +100,22 @@ def seed_data():
     conn.commit()
     conn.close()
     print("✅ Database seeding complete!")
+
+    try:
+        
+        meili = Client(getattr(Config, "MEILI_URL", "http://localhost:7700"), getattr(Config, "MEILI_KEY", None))
+        
+        conn = sqlite3.connect("database.db")
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM patients")
+        patients_list = [dict(row) for row in cursor.fetchall()]
+        conn.close()
+
+        meili.index("patients").add_documents(patients_list, primary_key="id")
+        print("Successfully synced SQLite patients to Meilisearch!")
+    except Exception as e:
+        print(f"Meilisearch sync skipped (server not running): {e}")
 
 if __name__ == "__main__":
     seed_data()
