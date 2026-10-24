@@ -1,26 +1,16 @@
-import { Image, View, StyleSheet } from 'react-native';
+import HotspotScreen from '../components/HotspotScreen';
 
 export default function Home() {
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('../../assets/images/home.png')}
-        style={styles.image}
-        resizeMode="contain"
-      />
-    </View>
+    <HotspotScreen
+      image={require('../../assets/images/home.png')}
+      frameWidth={402}
+      frameHeight={874}
+
+      hotspots={[
+
+        { x: 46, y: 480, w: 306, h: 68, to: '/login' },
+      ]}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
-  },
-});
