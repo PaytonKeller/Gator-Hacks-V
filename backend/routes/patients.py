@@ -1,8 +1,14 @@
+
 import sqlite3
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from config import Config
 
+try:
+    from meilisearch import Client
+    meili = Client(getattr(Config, "MEILI_URL", "http://localhost:7700"), getattr(Config, "MEILI_KEY", None))
+except Exception:
+    meili = None
 # Create the Blueprint for patient routes
 patients_bp = Blueprint("patients", __name__)
 
@@ -27,6 +33,14 @@ def log_patient_access(nurse_id, patient_id):
 def get_patient(lookup_id):
     # 1. Identify which nurse is making the request from their JWT token
     current_nurse_id = get_jwt_identity()
+    
+    if meili is not None:
+        try:
+            record = meili.index("patients").get_document(lookup_id)
+            log_patient_access(current_nurse_id, record.get("id", lookup_id))
+            return jsonify(record), 200
+        except Exception:
+            pass  # If not in Meili or server is down, fall back to SQLite below!
 
     conn = get_db_connection()
     cursor = conn.cursor()
