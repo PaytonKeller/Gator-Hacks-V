@@ -81,4 +81,29 @@ def get_current_nurse():
         "created_at": nurse["created_at"]
     }), 200
 
+@auth_bp.route("/refresh", methods=["POST"])
+@jwt_required(refresh=True)
+def refresh():
+    # 1. Get the nurse's identity from the valid refresh token
+    current_nurse_id = get_jwt_identity()
+
+    # 2. Look up their current role and name to include in the new access token
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("SELECT name, role FROM nurses WHERE id = ?", (current_nurse_id,))
+    nurse = cursor.fetchone()
+    conn.close()
+
+    if nurse is None:
+        return jsonify({"error": "Nurse not found"}), 404
+
+    # 3. Issue a brand new 15-minute access token
+    new_access_token = create_access_token(
+        identity=current_nurse_id,
+        additional_claims={"role": nurse["role"], "name": nurse["name"]}
+    )
+
+    return jsonify({
+        "access_token": new_access_token
+    }), 200
 
