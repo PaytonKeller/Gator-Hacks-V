@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import {
   Alert,
   Image,
@@ -14,6 +14,7 @@ import {
 } from "react-native";
 
 export default function Login() {
+  const router = useRouter();
   const { role } = useLocalSearchParams<{ role?: string }>();
   const { width, height } = useWindowDimensions();
   const [staffId, setStaffId] = useState("");
@@ -38,8 +39,8 @@ export default function Login() {
       Alert.alert("Missing info", "Please enter your ID and password.");
       return;
     }
-    console.log("Login:", { role, staffId, password });
-    // TODO: call your backend here
+    // Patients go to the Call screen, CNAs go to the Dashboard
+    router.replace((role === "patient" ? "/call" : "/dashboard") as any);
   };
 
   return (

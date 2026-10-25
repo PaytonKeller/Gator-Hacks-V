@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { Image, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 
 // ---- Adjust these numbers to line up the tap areas ----
-const SHOW_RED_BOXES = true; // set to false when everything lines up
+const SHOW_RED_BOXES = false; // set to false when everything lines up
 const PATIENT_TOP = 41.2;    // % from the top of the screen
 const CNA_TOP = 54.9;        // % from the top of the screen
 const BOX_LEFT = 11.4;       // % from the left edge
