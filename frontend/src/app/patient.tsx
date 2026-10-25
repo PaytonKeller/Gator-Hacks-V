@@ -3,7 +3,7 @@ import HotspotScreen from '../components/HotspotScreen';
 export default function Patient() {
   return (
     <HotspotScreen
-      image={require('../../assets/images/patient.png')}
+      image={require('../../assets/images/patientnotes.png')}
       frameWidth={402}
       frameHeight={874}
       hotspots={[

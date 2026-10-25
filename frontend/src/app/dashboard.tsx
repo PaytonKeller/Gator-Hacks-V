@@ -8,12 +8,17 @@ import {
   Vibration,
   View,
 } from "react-native";
+import { useRouter } from "expo-router";
 import { collection, doc, onSnapshot, query, updateDoc, where } from "firebase/firestore";
 import { db } from "../firebase";
+
+// Set to false once the red box sits exactly on the Patients pill
+const SHOW_RED_BOXES = false;
 
 type Call = { id: string; patientName: string; room: string };
 
 export default function Dashboard() {
+  const router = useRouter();
   const { width, height } = useWindowDimensions();
   const [calls, setCalls] = useState<Call[]>([]);
 
@@ -24,7 +29,7 @@ export default function Dashboard() {
       const list = snap.docs.map((d) => ({ id: d.id, ...(d.data() as any) })) as Call[];
       setCalls(list);
       if (snap.docChanges().some((c) => c.type === "added")) {
-        Vibration.vibrate([0, 500, 300, 500]); // buzz the phone
+        Vibration.vibrate([0, 500, 300, 500]);
       }
     });
     return unsub;
@@ -44,11 +49,15 @@ export default function Dashboard() {
         resizeMode="stretch"
       />
 
+      {/* Tap area over the "Patients" pill */}
+      <Pressable
+        style={[styles.patientsTap, SHOW_RED_BOXES && styles.redBox]}
+        onPress={() => router.push("/patient" as any)}
+      />
+
       {current && (
         <View style={styles.banner}>
-          <Text style={styles.bannerTitle}>
-            🔔 {current.patientName} needs help
-          </Text>
+          <Text style={styles.bannerTitle}>🔔 {current.patientName} needs help</Text>
           <Text style={styles.bannerSub}>
             {current.room}
             {calls.length > 1 ? `  (+${calls.length - 1} more waiting)` : ""}
@@ -64,6 +73,15 @@ export default function Dashboard() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#aed1bc" },
+  patientsTap: {
+    position: "absolute",
+    top: "57.2%",
+    left: "9.7%",
+    width: "81.3%",
+    height: "7.7%",
+    borderRadius: 999,
+  },
+  redBox: { backgroundColor: "rgba(255,0,0,0.35)" },
   banner: {
     position: "absolute",
     top: 60,
