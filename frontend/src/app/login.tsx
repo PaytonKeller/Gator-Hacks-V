@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
@@ -14,6 +15,7 @@ import {
   View,
 } from "react-native";
 
+const API_BASE = "https://shrug-snowiness-dispersed.ngrok-free.dev";
 export default function Login() {
   const { role } = useLocalSearchParams<{ role?: string }>();
   const router = useRouter();
@@ -35,13 +37,51 @@ export default function Login() {
     };
   }, []);
 
- const handleLogin = () => {
-  if (!staffId.trim() || !password.trim()) {
+ import AsyncStorage from "@react-native-async-storage/async-storage";
+import { API_BASE } from "@/src/config";
+
+// Inside Login():
+
+const [submitting, setSubmitting] = useState(false);
+
+const handleLogin = async () => {
+  const id = staffId.trim();
+
+  if (!id || !password) {
     Alert.alert("Missing info", "Please enter your ID and password.");
     return;
   }
-  // TODO: call your backend here
-  router.push("/patient");
+
+  setSubmitting(true);
+
+  try {
+    const res = await fetch(`${API_BASE}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id, password }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error ?? `Login failed (${res.status})`);
+    }
+
+    await AsyncStorage.multiSet([
+      ["access_token", data.access_token],
+      ["refresh_token", data.refresh_token],
+      ["nurse", JSON.stringify(data.nurse)],
+    ]);
+
+    router.replace("/patient");
+  } catch (e) {
+    Alert.alert(
+      "Login failed",
+      e instanceof Error ? e.message : "Could not connect to the server."
+    );
+  } finally {
+    setSubmitting(false);
+  }
 };
 
   return (
@@ -69,12 +109,15 @@ export default function Login() {
           autoCapitalize="none"
         />
 
-        <Pressable style={styles.button} onPress={handleLogin}>
-          <Text style={styles.buttonText}>Log in</Text>
-        </Pressable>
-        <Pressable style={styles.patientBox} onPress={handleLogin} />
-      </View>
-    </View>
+        <Pressable
+          style={styles.button}
+          onPress={handleLogin}
+          disabled={submitting}
+        >
+        <Text style={styles.buttonText}>
+          {submitting ? "Logging in…" : "Log in"}
+        </Text>
+      </Pressable>
   );
 }
 
