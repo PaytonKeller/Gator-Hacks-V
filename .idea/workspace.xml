@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acf3f30e-c832-4ed9-8836-4c1499948ed7" name="Changes" comment="huh">
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/patient.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/assets/images/cnadash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/cnadash.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
