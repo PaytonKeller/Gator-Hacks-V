@@ -118,10 +118,149 @@ def add_vitals(patient_id):
         (actual_patient_id, current_nurse_id, blood_pressure, heart_rate, temperature, oxygen_sat)
     )
     conn.commit()
+    cursor.execute(
+        """
+        SELECT blood_pressure, heart_rate, temperature, oxygen_sat, recorded_by, recorded_at
+        FROM vitals
+        WHERE patient_id = ?
+        ORDER BY recorded_at DESC
+        LIMIT 1
+        """,
+        (actual_patient_id,)
+    )
+    latest_vitals = dict(cursor.fetchone())
     conn.close()
+    if meili is not None:
+        try:
+            meili.index("patients").update_documents([{
+                "id": actual_patient_id,
+                "latest_vitals": latest_vitals
+            }])
+        except Exception:
+            pass
 
     return jsonify({
         "message": "Vitals recorded successfully",
         "patient_id": actual_patient_id,
         "recorded_by": current_nurse_id
     }), 201
+
+@patients_bp.route("/patient/<patient_id>/details", methods=["POST", "PUT"])
+@jwt_required()
+def update_patient_details(patient_id):
+    """Allows nurses to input or update demographic and clinical details (dob, room_number, diagnosis, allergies)."""
+    data = request.get_json()
+    if not data:
+        return jsonify({"error": "Patient details data is required"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "SELECT * FROM patients WHERE id = ? OR nfc_tag_id = ?",
+        (patient_id, patient_id)
+    )
+    patient = cursor.fetchone()
+
+    if patient is None:
+        conn.close()
+        return jsonify({"error": "Patient not found"}), 404
+
+    actual_patient_id = patient["id"]
+
+    # Pull incoming data or fall back to existing database values if fields are omitted
+    dob = data.get("dob", patient["dob"])
+    room_number = data.get("room_number", patient["room_number"])
+    diagnosis = data.get("diagnosis", patient["diagnosis"])
+    allergies = data.get("allergies", patient["allergies"])
+
+    cursor.execute(
+        """
+        UPDATE patients
+        SET dob = ?, room_number = ?, diagnosis = ?, allergies = ?
+        WHERE id = ?
+        """,
+        (dob, room_number, diagnosis, allergies, actual_patient_id)
+    )
+    conn.commit()
+    conn.close()
+
+    # Keep Meilisearch in sync if it's active
+    if meili is not None:
+        try:
+            meili.index("patients").update_documents([{
+                "id": actual_patient_id,
+                "dob": dob,
+                "room_number": room_number,
+                "diagnosis": diagnosis,
+                "allergies": allergies
+            }])
+        except Exception:
+            pass
+
+    return jsonify({
+        "message": "Patient details updated successfully",
+        "patient_id": actual_patient_id,
+        "dob": dob,
+        "room_number": room_number,
+        "diagnosis": diagnosis,
+        "allergies": allergies
+    }), 200
+@patients_bp.route("/patient/call", methods=["POST"])
+@jwt_required()
+def trigger_patient_call():
+    data = request.get_json() or {}
+    patient_id = data.get("patient_id", "PAT-001")
+    
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT room_number FROM patients WHERE id = ?", (patient_id,))
+    patient = cursor.fetchone()
+    room = patient["room_number"] if patient and patient["room_number"] else "101"
+
+    cursor.execute(
+        "INSERT INTO alerts (patient_id, room_number, status) VALUES (?, ?, 'PENDING')",
+        (patient_id, room)
+    )
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Nurse call sent successfully!", "room": room}), 201
+@patients_bp.route("/nurse/alerts", methods=["GET"])
+@jwt_required()
+def get_nurse_alerts():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    # Fetch all pending calls for the nurses to see
+    cursor.execute("SELECT * FROM alerts WHERE status = 'PENDING' ORDER BY created_at DESC")
+    alerts = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+
+    return jsonify(alerts), 200
+
+@patients_bp.route("/patient/verify", methods=["POST"])
+def verify_patient():
+    data = request.get_json() or {}
+    patient_id = data.get("patient_id")
+
+    if not patient_id:
+        return jsonify({"error": "Patient ID is required"}), 400
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(
+        "SELECT id, name, room_number FROM patients WHERE id = ? OR nfc_tag_id = ?",
+        (patient_id, patient_id)
+    )
+    patient = cursor.fetchone()
+    conn.close()
+
+    if patient is None:
+        return jsonify({"error": "Patient not found"}), 404
+
+    return jsonify({
+        "message": "Patient verified successfully",
+        "patient": dict(patient)
+    }), 200
