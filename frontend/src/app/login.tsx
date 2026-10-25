@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "expo-router";
 import { useLocalSearchParams } from "expo-router";
 import {
   Alert,
@@ -15,6 +16,7 @@ import {
 
 export default function Login() {
   const { role } = useLocalSearchParams<{ role?: string }>();
+  const router = useRouter();
   const { width, height } = useWindowDimensions();
   const [staffId, setStaffId] = useState("");
   const [password, setPassword] = useState("");
@@ -33,14 +35,14 @@ export default function Login() {
     };
   }, []);
 
-  const handleLogin = () => {
-    if (!staffId || !password) {
-      Alert.alert("Missing info", "Please enter your ID and password.");
-      return;
-    }
-    console.log("Login:", { role, staffId, password });
-    // TODO: call your backend here
-  };
+ const handleLogin = () => {
+  if (!staffId.trim() || !password.trim()) {
+    Alert.alert("Missing info", "Please enter your ID and password.");
+    return;
+  }
+  // TODO: call your backend here
+  router.push("/patient");
+};
 
   return (
     <View style={styles.root}>
@@ -70,6 +72,7 @@ export default function Login() {
         <Pressable style={styles.button} onPress={handleLogin}>
           <Text style={styles.buttonText}>Log in</Text>
         </Pressable>
+        <Pressable style={styles.patientBox} onPress={handleLogin} />
       </View>
     </View>
   );
@@ -100,4 +103,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonText: { color: "#fff", fontSize: 18 },
+  patientBox: {
+  position: "absolute",
+  top: "76%",
+  left: "25%",
+  width: "50%",
+  height: "5.5%",
+  backgroundColor: "rgba(255,0,0,0.35)", // temporary: shows the box
+},
 });
