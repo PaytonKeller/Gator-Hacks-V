@@ -41,7 +41,7 @@ export default function HotspotScreen({ image, frameWidth, frameHeight, hotspots
               top: h.y * scale,
               width: h.w * scale,
               height: h.h * scale,
-              backgroundColor: debug ? 'rgba(255,0,0,0.35)' : 'transparent',
+              backgroundColor: debug ? 'rgba(0,255,115,0.35)' : 'transparent',
             }}
           />
         ))}
