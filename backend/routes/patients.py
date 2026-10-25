@@ -118,7 +118,26 @@ def add_vitals(patient_id):
         (actual_patient_id, current_nurse_id, blood_pressure, heart_rate, temperature, oxygen_sat)
     )
     conn.commit()
+    cursor.execute(
+        """
+        SELECT blood_pressure, heart_rate, temperature, oxygen_sat, recorded_by, recorded_at
+        FROM vitals
+        WHERE patient_id = ?
+        ORDER BY recorded_at DESC
+        LIMIT 1
+        """,
+        (actual_patient_id,)
+    )
+    latest_vitals = dict(cursor.fetchone())
     conn.close()
+    if meili is not None:
+        try:
+            meili.index("patients").update_documents([{
+                "id": actual_patient_id,
+                "latest_vitals": latest_vitals
+            }])
+        except Exception:
+            pass
 
     return jsonify({
         "message": "Vitals recorded successfully",
