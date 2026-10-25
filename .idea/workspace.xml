@@ -5,13 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acf3f30e-c832-4ed9-8836-4c1499948ed7" name="Changes" comment="huh">
-      <change afterPath="$PROJECT_DIR$/frontend/assets/images/dashboard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/assets/images/login.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/assets/images/patient.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/login.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/HotspotScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/assets/images/patientcall.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/patienthome.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,12 +24,12 @@
     &quot;assignee&quot;: &quot;PaytonKeller&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/PaytonKeller/Gator-Hacks-V.git",
-    "accountId": "504e51d9-2aff-4372-93c6-cf419e5774b4"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PaytonKeller/Gator-Hacks-V.git&quot;,
+    &quot;accountId&quot;: &quot;504e51d9-2aff-4372-93c6-cf419e5774b4&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -41,21 +38,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "ui/build-screens",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Users/joswi/PycharmProjects/Gator-Hacks-V/frontend/assets/images",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "memory.settings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ui/build-screens&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/joswi/PycharmProjects/Gator-Hacks-V/frontend/assets/images&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;memory.settings&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\joswi\PycharmProjects\Gator-Hacks-V\frontend\assets\images" />

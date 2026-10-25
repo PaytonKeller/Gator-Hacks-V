@@ -8,7 +8,7 @@ export default function Login() {
       frameHeight={874}
       debug
       hotspots={[
-        { x: 16, y: 56, w: 48, h: 48, to: 'back' },
+        { x: 52, y: 598, w: 46, h: 46, to: 'patienthome' },
       ]}
     />
   );
