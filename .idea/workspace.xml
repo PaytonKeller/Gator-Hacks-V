@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acf3f30e-c832-4ed9-8836-4c1499948ed7" name="Changes" comment="huh">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/enterid.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/_layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/_layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/login.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/HotspotScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/HotspotScreen.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,5 +100,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="huh" />
     <option name="LAST_COMMIT_MESSAGE" value="huh" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/frontend/src/app/index.tsx</url>
+          <line>8</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
