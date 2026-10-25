@@ -5,21 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="acf3f30e-c832-4ed9-8836-4c1499948ed7" name="Changes" comment="huh">
-      <change afterPath="$PROJECT_DIR$/frontend/assets/images/dashboard.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/assets/images/login.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/assets/images/patient.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/login.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/HotspotScreen.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/assets/images/cnadash.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/app/cnadash.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -27,12 +32,12 @@
     &quot;assignee&quot;: &quot;PaytonKeller&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/PaytonKeller/Gator-Hacks-V.git",
-    "accountId": "504e51d9-2aff-4372-93c6-cf419e5774b4"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/PaytonKeller/Gator-Hacks-V.git&quot;,
+    &quot;accountId&quot;: &quot;504e51d9-2aff-4372-93c6-cf419e5774b4&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -47,13 +52,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "ui/build-screens",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/joswi/PycharmProjects/Gator-Hacks-V/frontend/assets/images",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "memory.settings"
+    "settings.editor.selected.configurable": "memory.settings",
+    "ts.external.directory.path": "C:\\Users\\effie\\PycharmProjects\\lecture209\\Gator-Hacks-V\\frontend\\node_modules\\typescript\\lib"
   }
 }]]></component>
   <component name="RecentsManager">
