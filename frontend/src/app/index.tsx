@@ -1,98 +1,49 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from "expo-router";
+import { Image, Pressable, StyleSheet, useWindowDimensions, View } from "react-native";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+// ---- Adjust these numbers to line up the tap areas ----
+const SHOW_RED_BOXES = true; // set to false when everything lines up
+const PATIENT_TOP = 41.2;    // % from the top of the screen
+const CNA_TOP = 54.9;        // % from the top of the screen
+const BOX_LEFT = 11.4;       // % from the left edge
+const BOX_WIDTH = 76.1;      // % of the screen width
+const BOX_HEIGHT = 7.7;      // % of the screen height
+// --------------------------------------------------------
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function Welcome() {
+  const router = useRouter();
+  const { width, height } = useWindowDimensions();
+
+  const tapStyle = (top: number) => ({
+    position: "absolute" as const,
+    top: `${top}%` as `${number}%`,
+    left: `${BOX_LEFT}%` as `${number}%`,
+    width: `${BOX_WIDTH}%` as `${number}%`,
+    height: `${BOX_HEIGHT}%` as `${number}%`,
+    backgroundColor: SHOW_RED_BOXES ? "rgba(255,0,0,0.35)" : "transparent",
+  });
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.root}>
+      <Image
+        source={require("../../assets/images/home.png")}
+        style={{ position: "absolute", top: 0, left: 0, width, height }}
+        resizeMode="stretch"
+      />
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      <Pressable
+        style={tapStyle(PATIENT_TOP)}
+        onPress={() => router.push({ pathname: "/login", params: { role: "patient" } })}
+      />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
-
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
-
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+      <Pressable
+        style={tapStyle(CNA_TOP)}
+        onPress={() => router.push({ pathname: "/login", params: { role: "cna" } })}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
-  },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
-  },
-  title: {
-    textAlign: 'center',
-  },
-  code: {
-    textTransform: 'uppercase',
-  },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
-  },
+  root: { flex: 1, backgroundColor: "#aed1bc" },
 });
